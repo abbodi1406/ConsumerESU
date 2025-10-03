@@ -376,7 +376,7 @@ function SetConfig($fID, $fState, $fReg)
 	RunTask
 
 	[byte[]]$fcon = [BitConverter]::GetBytes([UInt32]$fID) + [BitConverter]::GetBytes($fPriority) + [BitConverter]::GetBytes($fState) + [BitConverter]::GetBytes(0) + [BitConverter]::GetBytes(0) + [BitConverter]::GetBytes(0) + [BitConverter]::GetBytes(0) + [BitConverter]::GetBytes(1)
-	try {[UInt64]$fccs = $Win32::RtlQueryFeatureConfigurationChangeStamp()} catch {UInt64]$fccs = 0}
+	try {[UInt64]$fccs = $Win32::RtlQueryFeatureConfigurationChangeStamp()} catch {[UInt64]$fccs = 0}
 	try {
 		$nRet = $Win32::RtlSetFeatureConfigurations([ref]$fccs, 1, $fcon, 1)
 		if ($nRet -lt 0) {
@@ -571,3 +571,4 @@ if (!$eRet) {
 CheckEligibility
 ExitScript 0
 #endregion
+
